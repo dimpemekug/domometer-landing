@@ -92,6 +92,12 @@
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
+
+        /* Modal Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+        html.dark .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
     </style>
 </head>
 <body class="antialiased bg-gray-50 text-neutral-900 dark:bg-black dark:text-white transition-colors duration-300 overflow-x-hidden">
@@ -392,7 +398,7 @@
             </div>
         </div>
 
-        <!-- REVIEWS SLIDER (ALLINEATO CORRETTAMENTE) -->
+        <!-- REVIEWS SLIDER -->
         <div class="w-full max-w-2xl mx-auto relative overflow-hidden py-8 bg-gray-50 dark:bg-[#050505] border border-gray-200 dark:border-[#1A1A1A] rounded-3xl mb-24">
             <div class="fade-mask absolute inset-0 z-10 pointer-events-none"></div>
             <div class="flex gap-6 w-max animate-scroll hover:pause px-4">
@@ -435,7 +441,7 @@
                     <svg class="w-5 h-5 text-gray-400 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                 </summary>
                 <div class="p-6 pt-2 text-sm text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-white/5 space-y-6 leading-relaxed">
-                    <p class="text-xs text-gray-400">Ultimo aggiornamento: <span class="text-neutral-900 dark:text-white">[2026-03-17]</span></p>
+                    <p class="text-xs text-gray-400">Ultimo aggiornamento: <span class="text-neutral-900 dark:text-white">17 Marzo 2026</span></p>
                     <section>
                         <h4 class="font-bold text-neutral-900 dark:text-white mb-1">1. Chi siamo</h4>
                         <p>DomoMeter è un’app per tracciare i consumi domestici di luce, gas e acqua. Per domande: <a href="mailto:dimpemekug.app@gmail.com" class="text-[#007AFF] hover:underline">dimpemekug.app@gmail.com</a>.</p>
@@ -448,6 +454,14 @@
                         <h4 class="font-bold text-neutral-900 dark:text-white mb-1">3. Privacy e Sicurezza</h4>
                         <p>Nessun dato viene inviato a server esterni per analisi o marketing. I tuoi consumi sono privati e sicuri sul tuo telefono.</p>
                     </section>
+
+                    <!-- Bottone per aprire MD completo -->
+                    <div class="pt-4 border-t border-gray-100 dark:border-white/5 mt-4">
+                        <button id="open-privacy-modal" class="text-[#007AFF] dark:text-blue-400 font-bold hover:underline flex items-center gap-2 text-xs uppercase tracking-widest">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            Leggi informativa completa (.md)
+                        </button>
+                    </div>
                 </div>
             </details>
 
@@ -473,8 +487,39 @@
 
     </main>
 
-    <!-- LOGICA TEMA -->
+    <!-- MODALE PRIVACY POLICY -->
+    <div id="privacy-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 overflow-hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" id="modal-backdrop"></div>
+        
+        <!-- Contenuto Modale -->
+        <div class="relative bg-white dark:bg-[#0F0F0F] w-full max-w-3xl max-h-[90vh] rounded-[2rem] shadow-2xl flex flex-col border border-gray-200 dark:border-white/10 scale-95 transition-transform duration-300" id="modal-container">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-100 dark:border-white/5 flex justify-between items-center bg-gray-50/50 dark:bg-white/[0.02] rounded-t-[2rem]">
+                <div>
+                    <h3 class="font-bold text-lg text-neutral-900 dark:text-white uppercase tracking-tight">Privacy Policy Estesa</h3>
+                    <p class="text-[10px] text-gray-500 font-mono">PRIVACY_POLICY_IT.md</p>
+                </div>
+                <button id="close-privacy-modal" class="p-2 hover:bg-gray-200 dark:hover:bg-white/10 rounded-full transition-colors text-gray-500 dark:text-gray-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            
+            <!-- Corpo Modale (Markdown in tag PRE per visualizzazione raw) -->
+            <div class="p-6 overflow-y-auto font-mono text-sm leading-relaxed custom-scrollbar">
+                <pre id="privacy-content" class="whitespace-pre-wrap break-words text-gray-700 dark:text-gray-300"></pre>
+            </div>
+            
+            <!-- Footer -->
+            <div class="p-4 border-t border-gray-100 dark:border-white/5 text-center bg-gray-50/50 dark:bg-white/[0.02] rounded-b-[2rem]">
+                <button id="close-privacy-modal-btn" class="px-8 py-2.5 bg-neutral-900 dark:bg-white dark:text-black text-white rounded-xl font-bold text-sm hover:opacity-80 transition active:scale-95">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGICA TEMA E MODALE -->
     <script>
+        // Gestione Tema
         const toggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
 
@@ -494,6 +539,65 @@
         });
 
         initTheme();
+
+        // Gestione Modale Privacy
+        const openPrivacyBtn = document.getElementById('open-privacy-modal');
+        const closePrivacyBtn = document.getElementById('close-privacy-modal');
+        const closePrivacyBtnFooter = document.getElementById('close-privacy-modal-btn');
+        const privacyModal = document.getElementById('privacy-modal');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const modalContainer = document.getElementById('modal-container');
+        const privacyContent = document.getElementById('privacy-content');
+
+        async function togglePrivacyModal(show) {
+            if (show) {
+                try {
+                    // Carica il file .md locale
+                    const response = await fetch('PRIVACY_POLICY_IT.md');
+                    if (!response.ok) throw new Error('File non trovato');
+                    const text = await response.text();
+                    
+                    // Inserisce il testo nel tag pre (senza conversione HTML)
+                    privacyContent.textContent = text;
+                    
+                    // Mostra modale con animazione
+                    privacyModal.classList.remove('hidden');
+                    privacyModal.classList.add('flex');
+                    document.body.style.overflow = 'hidden'; 
+                    
+                    setTimeout(() => {
+                        modalContainer.classList.remove('scale-95');
+                        modalContainer.classList.add('scale-100');
+                    }, 10);
+                    
+                } catch (error) {
+                    console.error('Errore:', error);
+                    alert('Impossibile caricare l\'informativa completa. Assicurati che il file PRIVACY_POLICY_IT.md sia nella stessa cartella.');
+                }
+            } else {
+                // Animazione chiusura
+                modalContainer.classList.remove('scale-100');
+                modalContainer.classList.add('scale-95');
+                
+                setTimeout(() => {
+                    privacyModal.classList.add('hidden');
+                    privacyModal.classList.remove('flex');
+                    document.body.style.overflow = ''; 
+                }, 200);
+            }
+        }
+
+        openPrivacyBtn.addEventListener('click', () => togglePrivacyModal(true));
+        closePrivacyBtn.addEventListener('click', () => togglePrivacyModal(false));
+        closePrivacyBtnFooter.addEventListener('click', () => togglePrivacyModal(false));
+        modalBackdrop.addEventListener('click', () => togglePrivacyModal(false));
+
+        // Chiudi con tasto ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !privacyModal.classList.contains('hidden')) {
+                togglePrivacyModal(false);
+            }
+        });
     </script>
 </body>
 </html>
