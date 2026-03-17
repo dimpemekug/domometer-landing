@@ -71,6 +71,6 @@ La presente Informativa sulla Privacy può essere aggiornata nelle future versio
 
 Sviluppatore / Editore: `[dimpemekug]`
 
-Email supporto: `[dimpemekug.app@gmail.com]`
+Email supporto: [dimpemekug.app@gmail.com](mailto:dimpemekug.app@gmail.com)
 
-URL supporto: `[https://dimpemekug.github.io/domometer-landing/]`
+URL supporto: [https://dimpemekug.github.io/domometer-landing/](https://dimpemekug.github.io/domometer-landing/)
