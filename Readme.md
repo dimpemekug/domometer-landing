@@ -9,7 +9,7 @@ Questa pagina è progettata per presentare l'app in modo innovativo: include un 
 
 ## ✨ Anteprima Live
 Puoi vedere il sito online qui:
-👉 **[Inserisci qui il link alla tua GitHub Page, es: https://tuonome.github.io/domometer-landing]**
+👉 **[https://dimpemekug.github.io/domometer-landing/]**
 
 ---
 
