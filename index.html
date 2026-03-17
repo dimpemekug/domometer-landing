@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DomoMeter – Traccia i tuoi consumi domestici</title>
+    <meta name="description" content="Monitora luce, acqua e gas in un'unica app. Scegli il tuo stile: moderno o retro.">
+    <link rel="icon" type="image/png" href="icon.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configurazione Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans:['Inter', 'sans-serif'],
+                        mono:['"Courier New"', 'Courier', 'monospace'],
+                    },
+                    colors: {
+                        accent: '#007AFF', 
+                        retroDark: '#222222',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scroll': 'scroll 40s linear infinite',
+                    },
+                    keyframes: {
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Transizioni fluide */
+        body, .ui-element, .bento-box, img, details, summary, svg, p, h1, h2, h3, div, button, input {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, fill 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* 3D Phone Effect */
+        .perspective-container { 
+            perspective: 2000px; 
+            transform-style: preserve-3d;
+        }
+        
+        .phones-wrapper {
+            transform: rotateX(15deg) rotateZ(-5deg) rotateY(10deg);
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        .phones-wrapper:hover {
+            transform: rotateX(5deg) rotateZ(-2deg) rotateY(5deg);
+        }
+
+        .phone-3d {
+            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .phone-modern:hover { transform: translateZ(20px) scale(1.02); }
+        .phone-retro:hover { transform: translateZ(20px) scale(1.02); }
+
+        /* Background Grid */
+        .bg-grid {
+            background-size: 50px 50px;
+            mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+        }
+        html:not(.dark) .bg-grid {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        }
+        html.dark .bg-grid {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .fade-mask {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+    </style>
+</head>
+<body class="antialiased bg-gray-50 text-neutral-900 dark:bg-black dark:text-white transition-colors duration-300 overflow-x-hidden">
+
+    <div class="fixed inset-0 bg-grid z-[-1] pointer-events-none h-[100vh]"></div>
+
+    <!-- Toggle Tema -->
+    <button id="theme-toggle" class="fixed top-6 right-6 z-50 p-3 rounded-full bg-white border border-gray-200 dark:bg-[#1A1A1A] dark:border-white/10 shadow-lg hover:scale-110 transition-transform group" aria-label="Cambia tema">
+        <svg class="w-6 h-6 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <svg class="w-6 h-6 block dark:hidden text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+    </button>
+
+    <main class="max-w-4xl mx-auto px-6 pt-16 pb-24 flex flex-col items-center relative">
+
+        <!-- LOGO APP -->
+        <div class="mb-10 relative group">
+            <div class="absolute -inset-1 bg-gradient-to-br from-blue-400 to-emerald-400 rounded-[2.2rem] blur-xl opacity-40 group-hover:opacity-60 transition duration-500"></div>
+            <div class="relative w-28 h-28 rounded-[2rem] bg-white dark:bg-[#0F0F0F] border border-gray-200 dark:border-[#262626] p-1 shadow-2xl overflow-hidden">
+                <div class="w-full h-full rounded-[1.8rem] bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-black flex items-center justify-center overflow-hidden">
+                   <!-- Icona DomoMeter -->
+                   <img src="icon.png" onerror="this.style.display='none'; this.parentElement.innerHTML='&lt;div class=\'text-4xl\'&gt;⏱️&lt;/div&gt;'" alt="Time Tracker Icon" class="w-full h-full object-contain hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
+        </div>
+
+        <!-- HERO TEXT -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 text-neutral-900 dark:text-white">
+                DomoMeter
+            </h1>
+            <p class="text-xl font-medium text-gray-500 dark:text-gray-400 mb-6 max-w-lg mx-auto">
+                Luce, Gas e Acqua in un'unica app.<br>Monitora i consumi con il tuo stile.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs font-bold">iOS & Android</span>
+                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 text-xs font-bold">2 Stili Grafici</span>
+            </div>
+        </div>
+
+        <!-- DOWNLOAD BUTTONS -->
+        <div class="flex flex-col sm:flex-row items-center gap-4 mb-20 w-full justify-center z-20 relative">
+            <a href="#" class="flex items-center gap-3 bg-black text-white dark:bg-white dark:text-black px-8 py-3.5 rounded-2xl font-bold hover:opacity-80 transition active:scale-95 shadow-xl shadow-black/10 dark:shadow-white/5">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.84 1.53-2.95 1.5a3.6 3.6 0 0 1 1.05-3.19z"/></svg>
+                <span>App Store</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 bg-white text-black border border-gray-200 dark:bg-[#1A1A1A] dark:border-[#262626] dark:text-white px-8 py-3.5 rounded-2xl font-bold hover:bg-gray-100 dark:hover:bg-white/10 transition active:scale-95 shadow-sm">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.36,10.72L17.5,9.11L15.39,11.23L17.5,13.34L20.36,11.73C20.79,11.49 20.79,10.96 20.36,10.72M16.81,8.88L14.54,11.15L6.05,2.66L16.81,8.88Z"/></svg>
+                <span>Google Play</span>
+            </a>
+        </div>
+
+        <!-- DOUBLE 3D PHONE MOCKUP -->
+        <div class="perspective-container w-full flex justify-center mb-24 relative overflow-hidden md:overflow-visible pb-10">
+            <!-- Glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
+            
+            <!-- Wrapper Animato -->
+            <div class="phones-wrapper flex justify-center -space-x-16 md:-space-x-4 scale-[0.6] sm:scale-75 md:scale-100 mt-[-80px] md:mt-0">
+                
+                <!-- PHONE 1: STILE MODERNO -->
+                <div class="phone-3d phone-modern w-[320px] h-[680px] bg-gray-900 border-[8px] border-gray-800 dark:bg-black dark:border-[#222] rounded-[3.5rem] overflow-hidden relative flex flex-col box-content z-20 -rotate-2 origin-bottom-right">
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 h-[26px] w-[90px] bg-black rounded-full z-50"></div>
+                    
+                    <!-- UI MODERNA -->
+                    <div class="flex-1 bg-[#F2F2F7] dark:bg-[#000000] flex flex-col font-sans relative overflow-hidden ui-element">
+                        <div class="h-12 w-full flex justify-between items-end px-6 pb-1 text-[11px] font-bold text-black dark:text-white">
+                            <span>10:40</span>
+                            <div class="flex gap-1 items-center"><svg class="w-4 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.41 3.59-8 8-8 .9 0 1.77.15 2.59.41l-8.18 8.18C4.84 13.25 4 12.67 4 12zm8 8c-.9 0-1.77-.15-2.59-.41l8.18-8.18c1.57.64 2.41 2.23 2.41 4.59 0 4.41-3.59 8-8 8z"/></svg><div class="w-5 h-3 border border-current rounded-[3px] relative"><div class="absolute left-0.5 top-0.5 bottom-0.5 w-3 bg-current rounded-[1px]"></div></div></div>
+                        </div>
+                        
+                        <div class="text-center font-bold text-[15px] pt-2 text-black dark:text-white">DomoMeter</div>
+
+                        <div class="flex-1 overflow-y-auto no-scrollbar px-4 pt-4 pb-20 space-y-4">
+                            <div class="bg-gradient-to-br from-[#D1E8FF] to-[#E3F2FF] dark:from-[#1A365D] dark:to-[#0F2241] rounded-[24px] p-5 shadow-sm">
+                                <h2 class="text-2xl font-bold text-black dark:text-white tracking-tight mb-1">Usage Report</h2>
+                                <p class="text-[13px] text-gray-500 dark:text-gray-400 mb-4 font-medium">Period: 01 Mar - 31 Mar</p>
+                                <div class="flex gap-3">
+                                    <div class="bg-[#007AFF] text-white rounded-[16px] p-3 flex-1">
+                                        <div class="text-2xl font-bold">14</div>
+                                        <div class="text-[9px] font-semibold uppercase tracking-wider opacity-90 mt-1">Days Remaining</div>
+                                    </div>
+                                    <div class="bg-white/90 dark:bg-white/10 rounded-[16px] p-3 flex-1 text-black dark:text-white">
+                                        <div class="text-2xl font-bold">3</div>
+                                        <div class="text-[9px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-1">Utilities</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-[#1C1C1E] rounded-[24px] p-5 shadow-sm ui-element">
+                                <div class="flex justify-between items-end mb-3">
+                                    <h3 class="text-[22px] font-bold text-black dark:text-white">Energy</h3>
+                                    <div class="text-right">
+                                        <span class="text-[#007AFF] font-bold text-sm">300</span>
+                                        <span class="text-gray-400 dark:text-gray-500 text-sm">/</span>
+                                        <span class="font-bold text-black dark:text-white text-[19px]">3,210 kWh</span>
+                                    </div>
+                                </div>
+                                <div class="w-full h-[18px] bg-[#007AFF] rounded-full mb-2"></div>
+                                <div class="flex justify-between text-[10px] text-gray-500 font-medium uppercase tracking-wide">
+                                    <span>0 KWH</span>
+                                    <span>100% OF LIMIT</span>
+                                    <span>300 KWH</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-[#1C1C1E] rounded-[24px] p-5 shadow-sm ui-element">
+                                <div class="flex justify-between items-end mb-3">
+                                    <h3 class="text-[22px] font-bold text-black dark:text-white">Gas</h3>
+                                    <div class="text-right">
+                                        <span class="text-[#007AFF] font-bold text-sm">130</span>
+                                        <span class="text-gray-400 dark:text-gray-500 text-sm">/</span>
+                                        <span class="font-bold text-black dark:text-white text-[19px]">985 Smc</span>
+                                    </div>
+                                </div>
+                                <div class="w-full h-[18px] bg-[#007AFF] rounded-full mb-2"></div>
+                                <div class="flex justify-between text-[10px] text-gray-500 font-medium uppercase tracking-wide">
+                                    <span>0 SMC</span>
+                                    <span>100% OF LIMIT</span>
+                                    <span>100 SMC</span>
+                                </div>
+                            </div>
+                            
+                             <div class="bg-white dark:bg-[#1C1C1E] rounded-[24px] p-5 shadow-sm ui-element">
+                                <div class="flex justify-between items-end mb-3">
+                                    <h3 class="text-[22px] font-bold text-black dark:text-white">Water</h3>
+                                    <div class="text-right">
+                                        <span class="text-[#007AFF] font-bold text-sm">1.95</span>
+                                        <span class="text-gray-400 dark:text-gray-500 text-sm">/</span>
+                                        <span class="font-bold text-black dark:text-white text-[19px]">21.35 m³</span>
+                                    </div>
+                                </div>
+                                <div class="w-full h-[18px] bg-[#007AFF] rounded-full mb-2"></div>
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-24 right-6 z-20">
+                            <button class="w-14 h-14 bg-[#007AFF] rounded-full shadow-lg shadow-blue-500/40 flex items-center justify-center text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 w-full bg-[#F9F9F9]/90 dark:bg-[#1C1C1E]/90 backdrop-blur-md pb-8 pt-3 px-8 flex justify-between items-center ui-element">
+                            <div class="flex flex-col items-center gap-1">
+                                <div class="bg-[#D1E8FF] dark:bg-[#007AFF]/20 w-16 h-8 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-[#007AFF]" fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1a1 1 0 00.7-1.7L12 2.2a1 1 0 00-1.4 0l-9.3 9A1 1 0 003 13z"/></svg>
+                                </div>
+                                <span class="text-[10px] font-medium text-[#007AFF] mt-0.5">Domometer</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1 text-gray-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                <span class="text-[10px] font-medium mt-0.5">Statistics</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1 text-gray-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                <span class="text-[10px] font-medium mt-0.5">Settings</span>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-black/20 dark:bg-white/20 rounded-full z-50"></div>
+                    </div>
+                </div>
+
+                <!-- PHONE 2: STILE RETRO -->
+                <div class="phone-3d phone-retro w-[320px] h-[680px] bg-gray-300 border-[8px] border-gray-400 dark:bg-black dark:border-[#333] rounded-[3.5rem] overflow-hidden relative flex flex-col box-content z-10 rotate-3 translate-y-4">
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 h-[26px] w-[90px] bg-black rounded-full z-50"></div>
+                    
+                    <!-- UI RETRO -->
+                    <div class="flex-1 bg-[#F9F9F9] dark:bg-[#111111] flex flex-col font-mono relative overflow-hidden ui-element">
+                        <div class="h-12 w-full flex justify-between items-end px-6 pb-1 text-[11px] font-bold text-black dark:text-white font-sans">
+                            <span>10:43</span>
+                            <div class="flex gap-1 items-center"><svg class="w-4 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.41 3.59-8 8-8 .9 0 1.77.15 2.59.41l-8.18 8.18C4.84 13.25 4 12.67 4 12zm8 8c-.9 0-1.77-.15-2.59-.41l8.18-8.18c1.57.64 2.41 2.23 2.41 4.59 0 4.41-3.59 8-8 8z"/></svg><div class="w-5 h-3 border border-current rounded-[3px] relative"><div class="absolute left-0.5 top-0.5 bottom-0.5 w-3 bg-current rounded-[1px]"></div></div></div>
+                        </div>
+                        
+                        <div class="text-left font-bold text-xl pt-2 px-5 text-black dark:text-white tracking-tighter">DomoMeter</div>
+
+                        <div class="flex-1 overflow-y-auto no-scrollbar px-5 pt-6 pb-20 space-y-6">
+                            
+                            <div class="border-2 border-black dark:border-white p-4 ui-element">
+                                <h2 class="text-[26px] font-bold text-black dark:text-white tracking-tighter leading-none mb-4">USAGE<br>REPORT</h2>
+                                <p class="text-[13px] text-black dark:text-white mb-4">Period: 01 Mar - 31 Mar</p>
+                                <div class="flex gap-2">
+                                    <div class="border border-black dark:border-white p-2 px-3 flex-1 ui-element">
+                                        <div class="text-xl font-bold text-black dark:text-white">14</div>
+                                        <div class="text-[8px] mt-1 text-black dark:text-white">DAYS REMAINING</div>
+                                    </div>
+                                    <div class="border border-black dark:border-white p-2 px-3 flex-1 ui-element">
+                                        <div class="text-xl font-bold text-black dark:text-white">3</div>
+                                        <div class="text-[8px] mt-1 text-black dark:text-white">UTILITIES</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border-b border-black dark:border-white pb-6 ui-element">
+                                <div class="flex justify-between items-end mb-2">
+                                    <h3 class="text-[22px] font-bold text-black dark:text-white tracking-tighter">ENERGY</h3>
+                                    <div class="text-right text-black dark:text-white">
+                                        <span class="text-base">300</span>
+                                        <span>/</span>
+                                        <span class="font-bold text-lg">3,210 kWh</span>
+                                    </div>
+                                </div>
+                                <div class="w-full h-4 border-2 border-black dark:border-white bg-[#555] dark:bg-[#CCC] mb-2 ui-element"></div>
+                                <div class="flex justify-between text-[10px] text-black dark:text-white">
+                                    <span>0 KWH</span>
+                                    <span>100% OF LIMIT</span>
+                                    <span>300 KWH</span>
+                                </div>
+                            </div>
+
+                            <div class="border-b border-black dark:border-white pb-6 ui-element">
+                                <div class="flex justify-between items-end mb-2">
+                                    <h3 class="text-[22px] font-bold text-black dark:text-white tracking-tighter">GAS</h3>
+                                    <div class="text-right text-black dark:text-white">
+                                        <span class="text-base">130</span>
+                                        <span>/</span>
+                                        <span class="font-bold text-lg">985 Smc</span>
+                                    </div>
+                                </div>
+                                <div class="w-full h-4 border-2 border-black dark:border-white bg-[#555] dark:bg-[#CCC] mb-2 ui-element"></div>
+                                <div class="flex justify-between text-[10px] text-black dark:text-white">
+                                    <span>0 SMC</span>
+                                    <span>100% OF LIMIT</span>
+                                    <span>100 SMC</span>
+                                </div>
+                            </div>
+
+                             <div class="pb-6">
+                                <div class="flex justify-between items-end mb-2">
+                                    <h3 class="text-[22px] font-bold text-black dark:text-white tracking-tighter">WATER</h3>
+                                    <div class="text-right text-black dark:text-white">
+                                        <span class="text-base">1.95</span>
+                                        <span>/</span>
+                                        <span class="font-bold text-lg">21.35 m³</span>
+                                    </div>
+                                </div>
+                                <div class="w-full h-4 border-2 border-black dark:border-white bg-[#555] dark:bg-[#CCC] mb-2 ui-element relative">
+                                     <div class="absolute top-0 right-0 h-full w-[2%] bg-[#F9F9F9] dark:bg-[#111] border-l-2 border-black dark:border-white ui-element"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-24 right-6 z-20">
+                            <button class="w-14 h-14 bg-[#444] dark:bg-white rounded-[20px] shadow-lg flex items-center justify-center text-white dark:text-black ui-element">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 w-full bg-[#F9F9F9] dark:bg-[#111111] border-t-2 border-black dark:border-white pb-8 pt-4 px-8 flex justify-between items-center ui-element">
+                            <div class="bg-[#444] dark:bg-white text-white dark:text-black w-16 h-8 rounded-full flex items-center justify-center ui-element">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1a1 1 0 00.7-1.7L12 2.2a1 1 0 00-1.4 0l-9.3 9A1 1 0 003 13z"/></svg>
+                            </div>
+                            <div class="text-black dark:text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                            </div>
+                            <div class="text-black dark:text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-black/20 dark:bg-white/20 rounded-full z-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BENTO GRID -->
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-24 max-w-2xl mx-auto">
+            <div class="bento-box bg-white dark:bg-[#0F0F0F] border border-gray-200 dark:border-[#262626] p-6 rounded-3xl flex flex-col justify-between h-60 group hover:border-blue-400/30 shadow-sm hover:shadow-md">
+                <div class="w-10 h-10 bg-gray-100 dark:bg-[#1A1A1A] rounded-xl flex items-center justify-center text-xl mb-4 text-blue-500">⚡</div>
+                <div>
+                    <h3 class="text-lg font-bold mb-1 text-neutral-900 dark:text-white">Tutto in uno</h3>
+                    <p class="text-sm text-gray-500">Monitora elettricità, gas e acqua in un'unica comoda dashboard. Niente più fogli Excel sparsi.</p>
+                </div>
+            </div>
+            <div class="bento-box bg-white dark:bg-[#0F0F0F] border border-gray-200 dark:border-[#262626] p-6 rounded-3xl flex flex-col justify-between h-60 group hover:border-blue-400/30 shadow-sm hover:shadow-md">
+                <div class="w-10 h-10 bg-gray-100 dark:bg-[#1A1A1A] rounded-xl flex items-center justify-center text-xl mb-4">🎨</div>
+                <div>
+                    <h3 class="text-lg font-bold mb-1 text-neutral-900 dark:text-white">Doppio Stile</h3>
+                    <p class="text-sm text-gray-500">Preferisci un look iOS moderno o il fascino del design Retro (Monospace)? Scegli tu, entrambi con Dark Mode.</p>
+                </div>
+            </div>
+            <div class="bento-box md:col-span-2 bg-white dark:bg-[#0F0F0F] border border-gray-200 dark:border-[#262626] p-8 rounded-3xl group hover:border-blue-400/30 shadow-sm hover:shadow-md flex flex-col md:flex-row items-center gap-8 overflow-hidden">
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold mb-2 text-neutral-900 dark:text-white">Statistiche e Previsioni</h3>
+                    <p class="text-gray-500 mb-4">Analizza l'andamento dei tuoi consumi mese per mese. Scopri in tempo se stai superando il limite previsto prima dell'arrivo della bolletta.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs font-semibold bg-gray-100 dark:bg-[#1A1A1A] px-3 py-1 rounded-lg text-gray-600 dark:text-gray-400">Report Mensili</span>
+                        <span class="text-xs font-semibold bg-gray-100 dark:bg-[#1A1A1A] px-3 py-1 rounded-lg text-gray-600 dark:text-gray-400">Offline First</span>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 h-32 bg-gradient-to-br from-blue-50 to-blue-200 dark:from-[#0F172A] dark:to-black rounded-2xl border border-gray-100 dark:border-white/5 flex items-center justify-center relative">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-[#222] shadow-lg rounded-xl px-4 py-3 flex items-center gap-3 whitespace-nowrap">
+                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">14</div>
+                        <div>
+                            <div class="text-xs font-bold text-neutral-800 dark:text-white">Giorni rimanenti</div>
+                            <div class="w-16 h-1 bg-gray-200 rounded-full mt-1"><div class="w-1/2 h-full bg-blue-500 rounded-full"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REVIEWS SLIDER (ALLINEATO CORRETTAMENTE) -->
+        <div class="w-full max-w-2xl mx-auto relative overflow-hidden py-8 bg-gray-50 dark:bg-[#050505] border border-gray-200 dark:border-[#1A1A1A] rounded-3xl mb-24">
+            <div class="fade-mask absolute inset-0 z-10 pointer-events-none"></div>
+            <div class="flex gap-6 w-max animate-scroll hover:pause px-4">
+                <!-- Cards -->
+                <div class="w-80 bg-white dark:bg-[#0F0F0F] p-5 rounded-xl border border-gray-200 dark:border-[#262626] shadow-sm">
+                    <div class="text-yellow-400 text-xs mb-2">★★★★★</div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">"L'interfaccia Retro è fantastica. Finalmente capisco esattamente quanto consumo prima della bolletta."</p>
+                    <div class="text-xs font-bold text-gray-400">@marco_home</div>
+                </div>
+                <div class="w-80 bg-white dark:bg-[#0F0F0F] p-5 rounded-xl border border-gray-200 dark:border-[#262626] shadow-sm">
+                    <div class="text-yellow-400 text-xs mb-2">★★★★★</div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">"Semplice, veloce e soprattutto i dati restano sul mio telefono."</p>
+                    <div class="text-xs font-bold text-gray-400">@sara_green</div>
+                </div>
+                <div class="w-80 bg-white dark:bg-[#0F0F0F] p-5 rounded-xl border border-gray-200 dark:border-[#262626] shadow-sm">
+                    <div class="text-yellow-400 text-xs mb-2">★★★★★</div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">"Indispensabile con gli attuali costi dell'energia. La uso ogni settimana."</p>
+                    <div class="text-xs font-bold text-gray-400">@luca_risparmio</div>
+                </div>
+                 <div class="w-80 bg-white dark:bg-[#0F0F0F] p-5 rounded-xl border border-gray-200 dark:border-[#262626] shadow-sm">
+                    <div class="text-yellow-400 text-xs mb-2">★★★★★</div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">"Avere Luce, Acqua e Gas insieme mi ha cambiato la vita. Ottima la Dark Mode."</p>
+                    <div class="text-xs font-bold text-gray-400">@giulia_eco</div>
+                </div>
+                <!-- Duplicate for loop -->
+                <div class="w-80 bg-white dark:bg-[#0F0F0F] p-5 rounded-xl border border-gray-200 dark:border-[#262626] shadow-sm">
+                    <div class="text-yellow-400 text-xs mb-2">★★★★★</div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">"L'interfaccia Retro è fantastica. Finalmente capisco esattamente quanto consumo prima della bolletta."</p>
+                    <div class="text-xs font-bold text-gray-400">@marco_home</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACCORDION SECTIONS (Privacy & Contatti) -->
+        <div class="w-full max-w-2xl mx-auto mb-24 space-y-4">
+            
+            <details class="group bg-white dark:bg-[#0F0F0F] border border-gray-200 dark:border-[#262626] rounded-2xl overflow-hidden transition-all duration-300 open:shadow-lg open:ring-1 open:ring-black/5 dark:open:ring-white/10">
+                <summary class="flex justify-between items-center p-5 cursor-pointer list-none select-none text-sm font-semibold text-neutral-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                    <span>Informativa sulla Privacy – DomoMeter</span>
+                    <svg class="w-5 h-5 text-gray-400 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </summary>
+                <div class="p-6 pt-2 text-sm text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-white/5 space-y-6 leading-relaxed">
+                    <p class="text-xs text-gray-400">Ultimo aggiornamento: <span class="text-neutral-900 dark:text-white">[Inserisci Data]</span></p>
+                    <section>
+                        <h4 class="font-bold text-neutral-900 dark:text-white mb-1">1. Chi siamo</h4>
+                        <p>DomoMeter è un’app per tracciare i consumi domestici di luce, gas e acqua. Per domande: <a href="mailto:dimpemekug.app@gmail.com" class="text-[#007AFF] hover:underline">dimpemekug.app@gmail.com</a>.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-neutral-900 dark:text-white mb-1">2. Dati personali trattati</h4>
+                        <p>I dati sui tuoi consumi sono salvati esclusivamente in locale sul tuo dispositivo. Non richiediamo registrazione né raccogliamo dati sensibili.</p>
+                    </section>
+                    <section>
+                        <h4 class="font-bold text-neutral-900 dark:text-white mb-1">3. Privacy e Sicurezza</h4>
+                        <p>Nessun dato viene inviato a server esterni per analisi o marketing. I tuoi consumi sono privati e sicuri sul tuo telefono.</p>
+                    </section>
+                </div>
+            </details>
+
+            <details class="group bg-white dark:bg-[#0F0F0F] border border-gray-200 dark:border-[#262626] rounded-2xl overflow-hidden transition-all duration-300 open:shadow-lg open:ring-1 open:ring-black/5 dark:open:ring-white/10">
+                <summary class="flex justify-between items-center p-5 cursor-pointer list-none select-none text-sm font-semibold text-neutral-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                    <span>Supporto e contatti</span>
+                    <svg class="w-5 h-5 text-gray-400 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </summary>
+                <div class="p-6 pt-2 text-sm text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-white/5 leading-relaxed">
+                    <p class="mb-4">Per domande, assistenza o feedback su DomoMeter scrivici a <a href="mailto:dimpemekug.app@gmail.com" class="text-[#007AFF] hover:underline font-medium">dimpemekug.app@gmail.com</a>.</p>
+                    <div class="bg-gray-50 dark:bg-[#151515] p-4 rounded-xl border border-gray-100 dark:border-white/5">
+                        <p class="text-xs font-bold text-neutral-900 dark:text-white mb-1">💡 Tip per segnalare bug:</p>
+                        <p class="text-xs">Indica modello dispositivo, versione sistema operativo e passaggi per riprodurre l’errore.</p>
+                    </div>
+                </div>
+            </details>
+
+        </div>
+
+        <footer class="mt-8 text-gray-400 text-xs text-center pb-8 border-t border-gray-200 dark:border-white/5 pt-8 w-full max-w-2xl mx-auto">
+            <p>© 2026 DomoMeter App. Tutti i diritti riservati.</p>
+        </footer>
+
+    </main>
+
+    <!-- LOGICA TEMA -->
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                htmlElement.classList.toggle('dark', savedTheme === 'dark');
+            } else {
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                htmlElement.classList.toggle('dark', systemDark);
+            }
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        initTheme();
+    </script>
+</body>
+</html>
