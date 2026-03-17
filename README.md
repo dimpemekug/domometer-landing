@@ -1,39 +1,45 @@
-# DomoMeter Landing Page
+# 🏠 DomoMeter - App Landing Page
 
-Landing page statica per **DomoMeter**, app mobile per monitorare i consumi domestici di luce, gas e acqua.
+Una landing page moderna, minimale e responsiva per l'applicazione mobile **DomoMeter** (l'app per tracciare i consumi domestici di luce, gas e acqua).
 
-Il progetto è pensato per una pubblicazione semplice su **GitHub Pages**: non richiede build, dipendenze o framework lato app. Tutto vive in una singola pagina `index.html`, con **Tailwind CSS via CDN** e un minimo di **JavaScript vanilla** per tema e modale privacy.
+Questa pagina è progettata per presentare l'app in modo innovativo: include un **doppio mockup 3D interattivo** che mostra contemporaneamente i due stili grafici dell'app (Moderno e Retro), una struttura a griglia (Bento Grid) e il supporto completo alla Dark Mode.
 
-## Demo
+![Status](https://img.shields.io/badge/Status-Live-success)
+![Tech](https://img.shields.io/badge/Built%20with-HTML%20%26%20Tailwind-blue)
 
-Landing page online:
+## ✨ Anteprima Live
+Puoi vedere il sito online qui:
+👉 **[https://dimpemekug.github.io/domometer-landing/](https://dimpemekug.github.io/domometer-landing/)**
 
-`https://dimpemekug.github.io/domometer-landing/`
+---
 
-## Funzionalità
+## 🚀 Caratteristiche
 
-- Hero con branding DomoMeter e CTA per store mobile
-- Doppio mockup 3D che mostra i due stili dell'app: moderno e retro
-- Tema chiaro/scuro con salvataggio preferenza in `localStorage`
-- Sezione feature in layout bento grid
-- Slider recensioni in marquee continuo
-- Sezioni legali e supporto in accordion
-- Modale che carica il contenuto di [`PRIVACY_POLICY_IT.md`](./PRIVACY_POLICY_IT.md)
-- Layout responsive, adatto a desktop e mobile
+*   **📱 Doppio Mockup 3D:** Un'animazione CSS avanzata che mostra due smartphone affiancati e inclinati in 3D. Un telefono mostra l'interfaccia moderna in stile iOS, l'altro l'interfaccia in stile Retro/Monospace.
+*   **🌓 Dark Mode Reattiva:** Il sito rileva automaticamente la preferenza di sistema dell'utente. C'è anche un pulsante manuale (Sole/Luna). Entrambi gli smartphone nel mockup cambiano i propri colori in tempo reale!
+*   **📊 Design a Bento Grid:** Funzionalità dell'app presentate in eleganti riquadri modulari.
+*   **💬 Recensioni a Scorrimento:** Una fascia ("marquee") infinita e fluida che mostra le recensioni degli utenti.
+*   **⚡️ Nessun Framework Complesso:** Costruito con puro HTML e Tailwind CSS (caricato via CDN). Leggerissimo e si apre istantaneamente.
+*   **📄 Sezioni Legali Collassabili:** Privacy Policy e Supporto sono già integrate a fondo pagina con comodi menu a tendina.
 
-## Stack
+## 🛠️ Tecnologie Utilizzate
 
-- HTML5
-- Tailwind CSS via CDN
-- JavaScript vanilla
-- Google Fonts
+*   **HTML5** - Struttura semantica e accessibile.
+*   **Tailwind CSS (CDN)** - Styling, griglie e gestione dinamica del tema scuro.
+*   **JavaScript (Vanilla)** - Logica minima per il cambio tema e il salvataggio delle preferenze nel `localStorage`.
+*   **Google Fonts** - Utilizzo del font "Inter" (per il design moderno) e "Courier Prime/Monospace" (per il design retro).
 
-## Struttura
+## 📂 Struttura dei File
 
 ```text
-.
-├── index.html
-├── icon.png
-├── PRIVACY_POLICY_IT.md
-└── README.md
+/
+├── index.html              # Il codice principale della landing page
+├── icon.png                # L'icona dell'app
+├── PRIVACY_POLICY_IT.md    # Informativa privacy completa caricata nella modale
+└── README.md               # Questo file di documentazione
 ```
+
+## 🔒 Privacy Policy
+
+Puoi leggere la versione completa dell'informativa qui:
+👉 **[PRIVACY_POLICY_IT.md](./PRIVACY_POLICY_IT.md)**
