@@ -210,7 +210,6 @@
             <div class="absolute -inset-1 bg-gradient-to-br from-blue-400 to-emerald-400 rounded-[2.2rem] blur-xl opacity-40 group-hover:opacity-60 transition duration-500"></div>
             <div class="relative w-28 h-28 rounded-[2rem] bg-white dark:bg-[#0F0F0F] border border-gray-200 dark:border-[#262626] p-1 shadow-2xl overflow-hidden">
                 <div class="w-full h-full rounded-[1.8rem] bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-black flex items-center justify-center overflow-hidden">
-                   <!-- Icona DomoMeter -->
                    <img src="icon.png" onerror="this.style.display='none'; this.parentElement.innerHTML='&lt;div class=\'text-4xl\'&gt;⏱️&lt;/div&gt;'" alt="Time Tracker Icon" class="w-full h-full object-contain hover:scale-105 transition-transform duration-500">
                 </div>
             </div>
@@ -250,207 +249,28 @@
             <!-- Wrapper Animato -->
             <div class="phones-wrapper flex justify-center -space-x-16 md:-space-x-4 scale-[0.6] sm:scale-75 md:scale-100 mt-[-80px] md:mt-0">
                 
-                <!-- PHONE 1: STILE MODERNO -->
-                <div class="phone-3d phone-modern w-[320px] h-[680px] bg-gray-900 border-[8px] border-gray-800 dark:bg-black dark:border-[#222] rounded-[3.5rem] overflow-hidden relative flex flex-col box-content z-20 -rotate-2 origin-bottom-right">
-                    <div class="absolute top-3 left-1/2 -translate-x-1/2 h-[26px] w-[90px] bg-black rounded-full z-50"></div>
+                <!-- DOUBLE 3D PHONE MOCKUP -->
+                <div class="perspective-container w-full flex justify-center mb-24 relative overflow-hidden md:overflow-visible pb-10">
+                    <!-- Glow di sfondo -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
                     
-                    <!-- UI MODERNA -->
-                    <div class="flex-1 bg-[#F2F2F7] dark:bg-[#000000] flex flex-col font-sans relative overflow-hidden ui-element">
-                        <div class="h-12 w-full flex justify-between items-end px-6 pb-1 text-[11px] font-bold text-black dark:text-white">
-                            <span>10:40</span>
-                            <div class="flex gap-1 items-center"><svg class="w-4 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.41 3.59-8 8-8 .9 0 1.77.15 2.59.41l-8.18 8.18C4.84 13.25 4 12.67 4 12zm8 8c-.9 0-1.77-.15-2.59-.41l8.18-8.18c1.57.64 2.41 2.23 2.41 4.59 0 4.41-3.59 8-8 8z"/></svg><div class="w-5 h-3 border border-current rounded-[3px] relative"><div class="absolute left-0.5 top-0.5 bottom-0.5 w-3 bg-current rounded-[1px]"></div></div></div>
+                    <div class="phones-wrapper flex justify-center -space-x-16 md:-space-x-4 scale-[0.6] sm:scale-75 md:scale-100 mt-[-80px] md:mt-0">
+                        
+                        <!-- PHONE 1: STILE MODERNO -->
+                        <div class="phone-3d phone-modern relative w-[280px] h-[580px] rounded-[3rem] border-[8px] border-gray-800 dark:border-zinc-800 overflow-hidden bg-black shadow-2xl">
+                            <img id="img-modern" src="input_file_2.png" alt="DomoMeter Modern Style" class="w-full h-full object-cover transition-opacity duration-500">
                         </div>
                         
-                        <div class="text-center font-bold text-[15px] pt-2 text-black dark:text-white">DomoMeter</div>
-
-                        <div class="flex-1 overflow-y-auto no-scrollbar px-4 pt-4 pb-20 space-y-4">
-                            <div class="bg-gradient-to-br from-[#D1E8FF] to-[#E3F2FF] dark:from-[#1A365D] dark:to-[#0F2241] rounded-[24px] p-5 shadow-sm">
-                                <h2 class="text-2xl font-bold text-black dark:text-white tracking-tight mb-1">Usage Report</h2>
-                                <p class="text-[13px] text-gray-500 dark:text-gray-400 mb-4 font-medium">Period: 01 Mar - 31 Mar</p>
-                                <div class="flex gap-3">
-                                    <div class="bg-[#007AFF] text-white rounded-[16px] p-3 flex-1">
-                                        <div class="text-2xl font-bold">14</div>
-                                        <div class="text-[9px] font-semibold uppercase tracking-wider opacity-90 mt-1">Days Remaining</div>
-                                    </div>
-                                    <div class="bg-white/90 dark:bg-white/10 rounded-[16px] p-3 flex-1 text-black dark:text-white">
-                                        <div class="text-2xl font-bold">3</div>
-                                        <div class="text-[9px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-1">Utilities</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-white dark:bg-[#1C1C1E] rounded-[24px] p-5 shadow-sm ui-element">
-                                <div class="flex justify-between items-end mb-3">
-                                    <h3 class="text-[22px] font-bold text-black dark:text-white">Energy</h3>
-                                    <div class="text-right">
-                                        <span class="text-[#007AFF] font-bold text-sm">300</span>
-                                        <span class="text-gray-400 dark:text-gray-500 text-sm">/</span>
-                                        <span class="font-bold text-black dark:text-white text-[19px]">3,210 kWh</span>
-                                    </div>
-                                </div>
-                                <div class="w-full h-[18px] bg-[#007AFF] rounded-full mb-2"></div>
-                                <div class="flex justify-between text-[10px] text-gray-500 font-medium uppercase tracking-wide">
-                                    <span>0 KWH</span>
-                                    <span>100% OF LIMIT</span>
-                                    <span>300 KWH</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-white dark:bg-[#1C1C1E] rounded-[24px] p-5 shadow-sm ui-element">
-                                <div class="flex justify-between items-end mb-3">
-                                    <h3 class="text-[22px] font-bold text-black dark:text-white">Gas</h3>
-                                    <div class="text-right">
-                                        <span class="text-[#007AFF] font-bold text-sm">130</span>
-                                        <span class="text-gray-400 dark:text-gray-500 text-sm">/</span>
-                                        <span class="font-bold text-black dark:text-white text-[19px]">985 Smc</span>
-                                    </div>
-                                </div>
-                                <div class="w-full h-[18px] bg-[#007AFF] rounded-full mb-2"></div>
-                                <div class="flex justify-between text-[10px] text-gray-500 font-medium uppercase tracking-wide">
-                                    <span>0 SMC</span>
-                                    <span>100% OF LIMIT</span>
-                                    <span>100 SMC</span>
-                                </div>
-                            </div>
-                            
-                             <div class="bg-white dark:bg-[#1C1C1E] rounded-[24px] p-5 shadow-sm ui-element">
-                                <div class="flex justify-between items-end mb-3">
-                                    <h3 class="text-[22px] font-bold text-black dark:text-white">Water</h3>
-                                    <div class="text-right">
-                                        <span class="text-[#007AFF] font-bold text-sm">1.95</span>
-                                        <span class="text-gray-400 dark:text-gray-500 text-sm">/</span>
-                                        <span class="font-bold text-black dark:text-white text-[19px]">21.35 m³</span>
-                                    </div>
-                                </div>
-                                <div class="w-full h-[18px] bg-[#007AFF] rounded-full mb-2"></div>
-                            </div>
-                        </div>
-
-                        <div class="absolute bottom-24 right-6 z-20">
-                            <button class="w-14 h-14 bg-[#007AFF] rounded-full shadow-lg shadow-blue-500/40 flex items-center justify-center text-white">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                            </button>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 w-full bg-[#F9F9F9]/90 dark:bg-[#1C1C1E]/90 backdrop-blur-md pb-8 pt-3 px-8 flex justify-between items-center ui-element">
-                            <div class="flex flex-col items-center gap-1">
-                                <div class="bg-[#D1E8FF] dark:bg-[#007AFF]/20 w-16 h-8 rounded-full flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-[#007AFF]" fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1a1 1 0 00.7-1.7L12 2.2a1 1 0 00-1.4 0l-9.3 9A1 1 0 003 13z"/></svg>
-                                </div>
-                                <span class="text-[10px] font-medium text-[#007AFF] mt-0.5">Domometer</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-1 text-gray-400">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                                <span class="text-[10px] font-medium mt-0.5">Statistics</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-1 text-gray-400">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                                <span class="text-[10px] font-medium mt-0.5">Settings</span>
-                            </div>
-                        </div>
-                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-black/20 dark:bg-white/20 rounded-full z-50"></div>
+                        <!-- PHONE 2: STILE RETRO -->
+                        <div class="phone-3d phone-retro relative w-[280px] h-[580px] rounded-[3rem] border-[8px] border-gray-800 dark:border-zinc-800 overflow-hidden bg-black shadow-2xl">
+                            <img id="img-retro" src="input_file_3.png" alt="DomoMeter Retro Style" class="w-full h-full object-cover transition-opacity duration-500">
+                        </div>            
                     </div>
-                </div>
-
-                <!-- PHONE 2: STILE RETRO -->
-                <div class="phone-3d phone-retro w-[320px] h-[680px] bg-gray-300 border-[8px] border-gray-400 dark:bg-black dark:border-[#333] rounded-[3.5rem] overflow-hidden relative flex flex-col box-content z-10 rotate-3 translate-y-4">
-                    <div class="absolute top-3 left-1/2 -translate-x-1/2 h-[26px] w-[90px] bg-black rounded-full z-50"></div>
-                    
-                    <!-- UI RETRO -->
-                    <div class="flex-1 bg-[#F9F9F9] dark:bg-[#111111] flex flex-col font-mono relative overflow-hidden ui-element">
-                        <div class="h-12 w-full flex justify-between items-end px-6 pb-1 text-[11px] font-bold text-black dark:text-white font-sans">
-                            <span>10:43</span>
-                            <div class="flex gap-1 items-center"><svg class="w-4 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.41 3.59-8 8-8 .9 0 1.77.15 2.59.41l-8.18 8.18C4.84 13.25 4 12.67 4 12zm8 8c-.9 0-1.77-.15-2.59-.41l8.18-8.18c1.57.64 2.41 2.23 2.41 4.59 0 4.41-3.59 8-8 8z"/></svg><div class="w-5 h-3 border border-current rounded-[3px] relative"><div class="absolute left-0.5 top-0.5 bottom-0.5 w-3 bg-current rounded-[1px]"></div></div></div>
-                        </div>
-                        
-                        <div class="text-left font-bold text-xl pt-2 px-5 text-black dark:text-white tracking-tighter">DomoMeter</div>
-
-                        <div class="flex-1 overflow-y-auto no-scrollbar px-5 pt-6 pb-20 space-y-6">
-                            
-                            <div class="border-2 border-black dark:border-white p-4 ui-element">
-                                <h2 class="text-[26px] font-bold text-black dark:text-white tracking-tighter leading-none mb-4">USAGE<br>REPORT</h2>
-                                <p class="text-[13px] text-black dark:text-white mb-4">Period: 01 Mar - 31 Mar</p>
-                                <div class="flex gap-2">
-                                    <div class="border border-black dark:border-white p-2 px-3 flex-1 ui-element">
-                                        <div class="text-xl font-bold text-black dark:text-white">14</div>
-                                        <div class="text-[8px] mt-1 text-black dark:text-white">DAYS REMAINING</div>
-                                    </div>
-                                    <div class="border border-black dark:border-white p-2 px-3 flex-1 ui-element">
-                                        <div class="text-xl font-bold text-black dark:text-white">3</div>
-                                        <div class="text-[8px] mt-1 text-black dark:text-white">UTILITIES</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="border-b border-black dark:border-white pb-6 ui-element">
-                                <div class="flex justify-between items-end mb-2">
-                                    <h3 class="text-[22px] font-bold text-black dark:text-white tracking-tighter">ENERGY</h3>
-                                    <div class="text-right text-black dark:text-white">
-                                        <span class="text-base">300</span>
-                                        <span>/</span>
-                                        <span class="font-bold text-lg">3,210 kWh</span>
-                                    </div>
-                                </div>
-                                <div class="w-full h-4 border-2 border-black dark:border-white bg-[#555] dark:bg-[#CCC] mb-2 ui-element"></div>
-                                <div class="flex justify-between text-[10px] text-black dark:text-white">
-                                    <span>0 KWH</span>
-                                    <span>100% OF LIMIT</span>
-                                    <span>300 KWH</span>
-                                </div>
-                            </div>
-
-                            <div class="border-b border-black dark:border-white pb-6 ui-element">
-                                <div class="flex justify-between items-end mb-2">
-                                    <h3 class="text-[22px] font-bold text-black dark:text-white tracking-tighter">GAS</h3>
-                                    <div class="text-right text-black dark:text-white">
-                                        <span class="text-base">130</span>
-                                        <span>/</span>
-                                        <span class="font-bold text-lg">985 Smc</span>
-                                    </div>
-                                </div>
-                                <div class="w-full h-4 border-2 border-black dark:border-white bg-[#555] dark:bg-[#CCC] mb-2 ui-element"></div>
-                                <div class="flex justify-between text-[10px] text-black dark:text-white">
-                                    <span>0 SMC</span>
-                                    <span>100% OF LIMIT</span>
-                                    <span>100 SMC</span>
-                                </div>
-                            </div>
-
-                             <div class="pb-6">
-                                <div class="flex justify-between items-end mb-2">
-                                    <h3 class="text-[22px] font-bold text-black dark:text-white tracking-tighter">WATER</h3>
-                                    <div class="text-right text-black dark:text-white">
-                                        <span class="text-base">1.95</span>
-                                        <span>/</span>
-                                        <span class="font-bold text-lg">21.35 m³</span>
-                                    </div>
-                                </div>
-                                <div class="w-full h-4 border-2 border-black dark:border-white bg-[#555] dark:bg-[#CCC] mb-2 ui-element relative">
-                                     <div class="absolute top-0 right-0 h-full w-[2%] bg-[#F9F9F9] dark:bg-[#111] border-l-2 border-black dark:border-white ui-element"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="absolute bottom-24 right-6 z-20">
-                            <button class="w-14 h-14 bg-[#444] dark:bg-white rounded-[20px] shadow-lg flex items-center justify-center text-white dark:text-black ui-element">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                            </button>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 w-full bg-[#F9F9F9] dark:bg-[#111111] border-t-2 border-black dark:border-white pb-8 pt-4 px-8 flex justify-between items-center ui-element">
-                            <div class="bg-[#444] dark:bg-white text-white dark:text-black w-16 h-8 rounded-full flex items-center justify-center ui-element">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1a1 1 0 00.7-1.7L12 2.2a1 1 0 00-1.4 0l-9.3 9A1 1 0 003 13z"/></svg>
-                            </div>
-                            <div class="text-black dark:text-white">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                            </div>
-                            <div class="text-black dark:text-white">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                            </div>
-                        </div>
-                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-black/20 dark:bg-white/20 rounded-full z-50"></div>
-                    </div>
-                </div>
+                </div>  
+            
+            
+            
+            
             </div>
         </div>
 
@@ -582,12 +402,8 @@
 
     <!-- MODALE PRIVACY POLICY -->
     <div id="privacy-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 overflow-hidden">
-        <!-- Backdrop -->
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" id="modal-backdrop"></div>
-        
-        <!-- Contenuto Modale -->
         <div class="relative bg-white dark:bg-[#0F0F0F] w-full max-w-3xl max-h-[90vh] rounded-[2rem] shadow-2xl flex flex-col border border-gray-200 dark:border-white/10 scale-95 transition-transform duration-300" id="modal-container">
-            <!-- Header -->
             <div class="p-6 border-b border-gray-100 dark:border-white/5 flex justify-between items-center bg-gray-50/50 dark:bg-white/[0.02] rounded-t-[2rem]">
                 <div>
                     <h3 class="font-bold text-lg text-neutral-900 dark:text-white uppercase tracking-tight">Privacy Policy Estesa</h3>
@@ -597,13 +413,9 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
-            
-            <!-- Corpo Modale -->
             <div class="p-6 overflow-y-auto text-sm leading-relaxed custom-scrollbar">
                 <div id="privacy-content" class="markdown-content"></div>
             </div>
-            
-            <!-- Footer -->
             <div class="p-4 border-t border-gray-100 dark:border-white/5 text-center bg-gray-50/50 dark:bg-white/[0.02] rounded-b-[2rem]">
                 <button id="close-privacy-modal-btn" class="px-8 py-2.5 bg-neutral-900 dark:bg-white dark:text-black text-white rounded-xl font-bold text-sm hover:opacity-80 transition active:scale-95">Chiudi</button>
             </div>
@@ -613,27 +425,70 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 
-    <!-- LOGICA TEMA E MODALE -->
     <script>
-        // Gestione Tema
+// Gestione Tema e Immagini
         const toggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
-
+        const imgModern = document.getElementById('img-modern');
+        const imgRetro = document.getElementById('img-retro');
+        
+        // Mappatura esatta dei tuoi file
+        const images = {
+            light: {
+                modern: 'light_modern.png',
+                retro: 'light_retro.png'
+            },
+            dark: {
+                modern: 'dark_modern.png',
+                retro: 'dark_retro.png'
+            }
+        };
+        
+        function updateAssets(isDark) {
+            // Aggiungiamo un piccolo effetto di dissolvenza durante lo switch
+            imgModern.style.opacity = '0';
+            imgRetro.style.opacity = '0';
+            
+            setTimeout(() => {
+                if (isDark) {
+                    imgModern.src = images.dark.modern;
+                    imgRetro.src = images.dark.retro;
+                } else {
+                    imgModern.src = images.light.modern;
+                    imgRetro.src = images.light.retro;
+                }
+                imgModern.style.opacity = '1';
+                imgRetro.style.opacity = '1';
+            }, 150);
+        }
+        
         function initTheme() {
             const savedTheme = localStorage.getItem('theme');
+            let isDark;
+            
             if (savedTheme) {
-                htmlElement.classList.toggle('dark', savedTheme === 'dark');
+                isDark = (savedTheme === 'dark');
             } else {
-                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                htmlElement.classList.toggle('dark', systemDark);
+                isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+            
+            htmlElement.classList.toggle('dark', isDark);
+            // Applichiamo subito le immagini corrette all'avvio
+            if (isDark) {
+                imgModern.src = images.dark.modern;
+                imgRetro.src = images.dark.retro;
+            } else {
+                imgModern.src = images.light.modern;
+                imgRetro.src = images.light.retro;
             }
         }
-
+        
         toggleBtn.addEventListener('click', () => {
-            htmlElement.classList.toggle('dark');
-            localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+            const isDarkNow = htmlElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+            updateAssets(isDarkNow);
         });
-
+        
         initTheme();
 
         // Gestione Modale Privacy
@@ -648,11 +503,7 @@
 
         function renderPrivacyMarkdown(markdown) {
             if (window.marked && window.DOMPurify) {
-                const renderedHtml = window.marked.parse(markdown, {
-                    gfm: true,
-                    breaks: true,
-                });
-
+                const renderedHtml = window.marked.parse(markdown, { gfm: true, breaks: true });
                 privacyContent.innerHTML = window.DOMPurify.sanitize(renderedHtml);
                 privacyContent.querySelectorAll('a').forEach((link) => {
                     link.setAttribute('target', '_blank');
@@ -660,7 +511,6 @@
                 });
                 return;
             }
-
             privacyContent.textContent = markdown;
         }
 
@@ -668,33 +518,25 @@
             if (show) {
                 try {
                     if (!privacyMarkdownCache) {
-                        // Carica il file .md locale
                         const response = await fetch('PRIVACY_POLICY_IT.md');
                         if (!response.ok) throw new Error('File non trovato');
                         privacyMarkdownCache = await response.text();
                     }
-
                     renderPrivacyMarkdown(privacyMarkdownCache);
-                    
-                    // Mostra modale con animazione
                     privacyModal.classList.remove('hidden');
                     privacyModal.classList.add('flex');
                     document.body.style.overflow = 'hidden'; 
-                    
                     setTimeout(() => {
                         modalContainer.classList.remove('scale-95');
                         modalContainer.classList.add('scale-100');
                     }, 10);
-                    
                 } catch (error) {
                     console.error('Errore:', error);
-                    alert('Impossibile caricare l\'informativa completa. Assicurati che il file PRIVACY_POLICY_IT.md sia nella stessa cartella.');
+                    alert('Impossibile caricare l\'informativa completa.');
                 }
             } else {
-                // Animazione chiusura
                 modalContainer.classList.remove('scale-100');
                 modalContainer.classList.add('scale-95');
-                
                 setTimeout(() => {
                     privacyModal.classList.add('hidden');
                     privacyModal.classList.remove('flex');
@@ -708,7 +550,6 @@
         closePrivacyBtnFooter.addEventListener('click', () => togglePrivacyModal(false));
         modalBackdrop.addEventListener('click', () => togglePrivacyModal(false));
 
-        // Chiudi con tasto ESC
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !privacyModal.classList.contains('hidden')) {
                 togglePrivacyModal(false);
